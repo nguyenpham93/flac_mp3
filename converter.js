@@ -9,7 +9,7 @@ const path = require('path');
 /***
  * Đây là class dùng để convert flac sang mp3. Tại sao phải dùng class bởi vì class sẽ lưu thêm
  */
-class Converter {
+exports.Converter = class {
   constructor(sourceFolder, destFolder) {
     this.sourceFolder = sourceFolder;
     this.destFolder = destFolder;
@@ -20,17 +20,20 @@ class Converter {
    * @param inputFile
    */
   //TODO: hãy viết hàm để tìm ra outputFile phù hợp dựa vào sourceFolder, destFolder và inputFile
-  getOutputFile(inputFile) {
-
+  getOutputFile(inputFile){
+    let temp = inputFile.replace(this.sourceFolder,this.destFolder);
+    let temp1 = temp.replace('.flac','.mp3');
+    return temp1;
   }
   /***
    *
    * @param inputFile input file định dạng flac, output file có tên giống với input file extenstion là mp3
-   */
+   * @param inputFile là tên file không có đường dẫn
+   */ 
   flacToMp3(inputFile) {
     return new Promise((resolve, reject) => {
 
-      let outputFile = getOutputFile(inputFile);
+      let outputFile = this.getOutputFile(inputFile);
 
       const converter = spawn('ffmpeg', ['-y', '-i', inputFile, '-ab', '320k', '-map_metadata', '0', '-id3v2_version', '3', outputFile]);
 
@@ -38,7 +41,7 @@ class Converter {
         console.log(`${data}`);
       });
 
-      converter.on('close', (code) => {
+      converter.on('exit', (code) => {
         if (code === 0) {
           resolve(inputFile)
         } else {
@@ -46,6 +49,6 @@ class Converter {
         }
       });
     });
-
   }
 }
+

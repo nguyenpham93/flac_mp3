@@ -23,13 +23,14 @@ function flacToMp3(inputFile, outputFile, callback) {
   });
 
   converter.on('close', (code) => {
-    if (code === 0) {
-      callback(inputFile);
-    }
+    // if (code === 0) {
+    //   callback(inputFile);
+    // }
+    console.log("process closed");
   });
 }
 
-flacToMp3('demo.flac', 'demo.mp3', (inputFile) => {
-  console.log(`${inputFile} is converted`);
+flacToMp3('a.flac', 'a.mp3', (a) => {
+  console.log(`${a} is converted`);
 });
 

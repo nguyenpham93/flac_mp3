@@ -22,8 +22,8 @@ node --harmony-async-await convert_runner.js
 </br>
 
 <h3>2/ convert.js</h3>
--Convert.mp3Path(arrFlac) : convert mảng flac và trả về mảng mp3 
--Convert.flacToMp3(InputFile,OutputFile) : convert mỗi file flac thành mp3
+- Convert.mp3Path(arrFlac) : convert mảng flac và trả về mảng mp3 
+- Convert.flacToMp3(InputFile,OutputFile) : convert mỗi file flac thành mp3
 
 <h3>3/ convert_runner.js</h3> 
 - renderFile(arrFlac,arrMp3,convert) : Tiến hành convert danh sách files flac thành mp3,giới hạn số file chạy, nếu có file lỗi sẽ được xử lý riêng và log vào file log.txt 

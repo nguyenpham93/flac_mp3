@@ -17,8 +17,8 @@ node --harmony-async-await convert_runner.js
 - Dùng module ffmpeg.js để convert flac to mp3 : 
 <pre>spawn('ffmpeg', ['-y', '-i', inputFile, '-ab', '320k', '-map_metadata', '0', '-id3v2_version', '3', outputFile]);</pre>
 - Promise + async-await , then()
-- Child-process
-
+- Child-process 
+- Module shelljs : Dùng tạo subfolder 
 <h3>1/ scanfile.js</h3>
 - Scanner.getFile(srcFolder ) : Dùng để đọc file flac trong thư mục source
 - Scanner.cutPath(filepath) : Rút ngắn đường dẫn file bằng cách cắt bớt source folder 

@@ -8,14 +8,16 @@ const writer = require('fs').createWriteStream(__dirname + '/log.txt',{'flags': 
 let srcFolder = __dirname + "/flac";
 let desFolder = __dirname + "/mp3";
 let count = 0;
+let fileDone = 0;
 
 /*** 
     Func chuyển .flac files thành .mp3 files
     Giới hạn 1 files 1 lần convert
     * @param arrFiles : mảng chứa đường dẫn tới các files .flac  
+    * @param arrMp3 : mảng chưa các file mp3 chưa convert
 */
 
-renderFile = (arrFlac,arrMp3,convert)=>{
+renderFile = (arrFlac,arrMp3,convert,totalFile)=>{
     if(arrFlac.length > 0){
         let tempFlac = arrFlac.slice(0);
         let tempMp3 = arrMp3.slice(0);
@@ -28,18 +30,26 @@ renderFile = (arrFlac,arrMp3,convert)=>{
                 arrMp3.shift();
                 convert.flacToMp3(inputFile,outputFile)
                 .then((success)=>{
+                    fileDone++;
+                    checkDone(fileDone,totalFile);                    
                     count--;
-                    if(arrFlac.length == 0){
-                        console.timeEnd("Execute time : ");
-                    }
-                    renderFile(arrFlac,arrMp3,convert);
-                    },(err)=>{
-                        count--;
-                        writer.write(err + '\n'); 
-                        renderFile(arrFlac,arrMp3,convert);
-                    });
+                    renderFile(arrFlac,arrMp3,convert,totalFile);
+                },(err)=>{
+                    fileDone++;
+                    checkDone(fileDone,totalFile);
+                    count--;
+                    writer.write(err + '\n'); 
+                    renderFile(arrFlac,arrMp3,convert,totalFile);
+                });
                 }
         });
+    }
+ }
+
+ // Kiểm tra đã convert hết file chưa
+ function checkDone(curDone,total){
+    if(curDone == total){
+        console.timeEnd("time convert");
     }
  }
 /**
@@ -47,15 +57,19 @@ renderFile = (arrFlac,arrMp3,convert)=>{
 * @param desFolder : đường dẫn tới thư mục sau khi convert xong
 */
 async function runner(srcFolder,desFolder){
-    var myConvert = new Converter(srcFolder,desFolder);
-    var myScanner = new ScanFile(srcFolder);
-    //Get array .flac files make By Tung
-    var fileArrFlac = await myScanner.listAllFlac(myScanner.srcFolder);
-    // Nam
-    var fileArrMp3 = myConvert.mp3Path(fileArrFlac);
+    console.log('Converting ...');
+    let myConvert = new Converter(srcFolder,desFolder);
+    let myScanner = new ScanFile(srcFolder);
+    //Get array .flac files (Tung) 
+    let fileArrFlac = await myScanner.listAllFlac(myScanner.srcFolder);
+    // Check and return array contains file not convert (Nam)
+    let checked = myConvert.mp3Path(fileArrFlac);
     // Convert .flac to .mp3
-    renderFile(fileArrFlac,fileArrMp3,myConvert);
+    let arrFlac = checked[0];
+    let arrMp3 = checked[1];
+    renderFile(arrFlac,arrMp3,myConvert,arrFlac.length);
 }
 
-console.time("Execute time : ");
+console.time("time convert");
 runner(srcFolder,desFolder);
+

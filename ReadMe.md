@@ -1,23 +1,29 @@
 # Ứng dụng convert flac to mp3
 
 Demo kỹ thuật child-process, BlueBird promise</br>
-<strong>Chạy thử ứng dụng</strong></br>
+<h3>Yêu cầu :</h3>
+- Convert file định dạng flac sang mp3
+- Trả về thư mục file mp3 có cấu trúc giống thư mục flac  
+- Khi convert những files nào bị lỗi hoặc không đúng định dạng sẽ được xữ lý riêng và log vào log.txt
+- Convert xong sẽ hiển thị execute time, tối ưu chương trình
+<h3>Chạy thử ứng dụng</h3></br>
 <pre>
 git clone https://github.com/nguyenpham93/flac_mp3.git
 cd flac_mp3
 mp3 install
 node --harmony-async-await convert_runner.js
 </pre>
-<strong>Các kỹ thuật sử dụng</strong>
+<h3>Các kỹ thuật sử dụng</h3>
 - Dùng module ffmpeg.js để convert flac to mp3 : 
 <pre>spawn('ffmpeg', ['-y', '-i', inputFile, '-ab', '320k', '-map_metadata', '0', '-id3v2_version', '3', outputFile]);</pre>
-- Promise + async-await , then
+- Promise + async-await , then()
 - Child-process
 
 <h3>1/ scanfile.js</h3>
 - Scanner.getFile(srcFolder ) : Dùng để đọc file flac trong thư mục source
 - Scanner.cutPath(filepath) : Rút ngắn đường dẫn file bằng cách cắt bớt source folder 
--Scanner.addFlac(dir,check): Gọi hàm getFile(dir) lấy toàn bộ files trong thư mục gốc,kiểm tra đuôi .flac và trả về mảng files flac (không chứa thư mục)
+- Scanner.addFlac(dir,check): Gọi hàm getFile(dir) lấy toàn bộ files trong thư mục gốc,kiểm tra đuôi .flac và trả về mảng files flac (không chứa thư mục)
+- Scanner.checkFlac(file) : kiểm tra file định dạng flac và return true/false 
 - Chạy listAllPath (srcFolder) : Hàm xử lý chung Scanfile
 </br>
 

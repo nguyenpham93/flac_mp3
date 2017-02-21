@@ -30,7 +30,7 @@ renderFile = (arrFlac,arrMp3,convert)=>{
                 .then((success)=>{
                     count--;
                     if(arrFlac.length == 0){
-                        console.timeEnd("convert");
+                        console.timeEnd("Execute time : ");
                     }
                     renderFile(arrFlac,arrMp3,convert);
                     },(err)=>{
@@ -57,5 +57,5 @@ async function runner(srcFolder,desFolder){
     renderFile(fileArrFlac,fileArrMp3,myConvert);
 }
 
-console.time("convert");
+console.time("Execute time : ");
 runner(srcFolder,desFolder);

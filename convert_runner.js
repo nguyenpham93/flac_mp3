@@ -3,9 +3,11 @@ const Converter = require("./converter").Converter;
 const ScanFile = require("./scanfile").ScanFile;
 const Promise = require('bluebird');
 const path = require('path');
+const writer = require('fs').createWriteStream(__dirname + '/log.txt',{'flags': 'a'});
 
 let srcFolder = __dirname + "/flac";
 let desFolder = __dirname + "/mp3";
+let count = 0;
 
 /*** 
     Func chuyển .flac files thành .mp3 files
@@ -13,69 +15,52 @@ let desFolder = __dirname + "/mp3";
     * @param arrFiles : mảng chứa đường dẫn tới các files .flac  
 */
 
-//Nguyen
-var count = 0;
-var done = 0;
-  renderFile = (arrFlac,arrMp3,convert)=>{
-    arrFlac.forEach((file,index)=>{
-        let fileSrc = file.name;
-        let fileStat = file.status;
-        if(count < 2 && fileStat === 'not convert'){
-            count++;
-            flag = false;
-            convert.flacToMp3(fileSrc,arrMp3[index]).then((success)=>{
-                file.status = 'done';
-                count--;
-                done++;
-                if(done == arrFlac.length){
-                    console.timeEnd("convert");
+renderFile = (arrFlac,arrMp3,convert)=>{
+    if(arrFlac.length > 0){
+        let tempFlac = [];
+        let tempMp3 = [];
+        arrFlac.forEach((file,index)=>{
+            tempFlac.push(file);
+            tempMp3.push(arrMp3[index]);
+        });
+        let len = arrFlac.length;
+        tempFlac.forEach((file,index)=>{
+            let inputFile = convert.sourceFolder + '/' + file;
+            let outputFile = convert.destFolder + '/' + tempMp3[index];
+            if(count < 2){
+                count++;
+                arrFlac.shift();
+                arrMp3.shift();
+                convert.flacToMp3(inputFile,outputFile)
+                .then((success)=>{
+                    count--;
+                    // if(arrFlac.length == 0){
+                    //     console.timeEnd("convert");
+                    // }
+                    renderFile(arrFlac,arrMp3,convert);
+                    },(err)=>{
+                        count--;
+                        writer.write(err + '\n'); 
+                        renderFile(arrFlac,arrMp3,convert);
+                    });
                 }
-                renderFile(arrFlac,arrMp3,convert);
-            });
-        }   
-    });
-
+        });
+    }
  }
-
-// Module make by Nam
- let mp3Path = (pathFlac,convert) => {
-    let arrMp3 = [];
-    pathFlac.forEach(file => {
-        let filename = file.name;
-        let desname = filename.replace(convert.sourceFolder,convert.destFolder);
-            let temp = desname.replace('.flac', '.mp3');
-            arrMp3.push(temp);
-    });
-    return arrMp3;
-};
-
-//cach 1
-//  async function runner(srcFolder,desFolder){
-//     var myConvert = new Converter(srcFolder,desFolder);
-//     var myScanner = new ScanFile(srcFolder);
-//     //Get array .flac files
-//     var fileArr = await myScanner.listAllFlac(myScanner.srcFolder);
-//     // Convert .flac to .mp3
-//     renderFile(fileArr,myConvert);
-//  }
-
-// Sau khi Merge
+/**
+* @param srcFolder : đường dẫn tới thư mục flac
+* @param desFolder : đường dẫn tới thư mục sau khi convert xong
+*/
 async function runner(srcFolder,desFolder){
     var myConvert = new Converter(srcFolder,desFolder);
     var myScanner = new ScanFile(srcFolder);
     //Get array .flac files make By Tung
     var fileArrFlac = await myScanner.listAllFlac(myScanner.srcFolder);
     // Nam
-    var fileArrMp3 = mp3Path(fileArrFlac,myConvert);
+    var fileArrMp3 = myConvert.mp3Path(fileArrFlac);
     // Convert .flac to .mp3
     renderFile(fileArrFlac,fileArrMp3,myConvert);
+}
 
- }
- 
-console.time("convert");
+// console.time("convert");
 runner(srcFolder,desFolder);
-
-
-
-
-

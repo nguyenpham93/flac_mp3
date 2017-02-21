@@ -1,0 +1,2 @@
+File /home/bluevn/Desktop/techmaster/flac_mp3/flac/text2.flac caught error
+File /home/bluevn/Desktop/techmaster/flac_mp3/flac/textfile.flac caught error

@@ -20,6 +20,7 @@ node --harmony-async-await convert_runner.js
 - Scanner.addFlac(dir,check) : Gọi hàm getFile(dir) lấy toàn bộ files trong thư mục gốc,kiểm tra đuôi .flac và trả về mảng files flac (không chứa thư mục)
 - Chạy listAllPath (srcFolder) : Hàm xử lý chung Scanfile
 <br>
+
 <strong>2/ convert.js</strong>
 -Convert.mp3Path(arrFlac) : convert mảng flac và trả về mảng mp3 
 -Convert.flacToMp3(InputFile,OutputFile) : convert mỗi file flac thành mp3

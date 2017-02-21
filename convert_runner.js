@@ -17,12 +17,8 @@ let count = 0;
 
 renderFile = (arrFlac,arrMp3,convert)=>{
     if(arrFlac.length > 0){
-        let tempFlac = [];
-        let tempMp3 = [];
-        arrFlac.forEach((file,index)=>{
-            tempFlac.push(file);
-            tempMp3.push(arrMp3[index]);
-        });
+        let tempFlac = arrFlac.slice(0);
+        let tempMp3 = arrMp3.slice(0);
         tempFlac.forEach((file,index)=>{
             let inputFile = convert.sourceFolder + '/' + file;
             let outputFile = convert.destFolder + '/' + tempMp3[index];

@@ -14,17 +14,16 @@ node --harmony-async-await convert_runner.js
 - Promise + async-await , then
 - Child-process
 
-1/ scanfile.js
+<strong>1/ scanfile.js</strong>
 - Scanner.getFile(srcFolder ) : Dùng để đọc file flac trong thư mục source
 - Scanner.cutPath(filepath) : Rút ngắn đường dẫn file bằng cách cắt bớt source folder 
 - Scanner.addFlac(dir,check) : Gọi hàm getFile(dir) lấy toàn bộ files trong thư mục gốc,kiểm tra đuôi .flac và trả về mảng files flac (không chứa thư mục)
 - Chạy listAllPath (srcFolder) : Hàm xử lý chung Scanfile
-2/ convert.js
-
+<br>
+<strong>2/ convert.js</strong>
 -Convert.mp3Path(arrFlac) : convert mảng flac và trả về mảng mp3 
 -Convert.flacToMp3(InputFile,OutputFile) : convert mỗi file flac thành mp3
 
-3/ convert_runner.js 
-
+<strong>3/ convert_runner.js </strong>
 - renderFile(arrFlac,arrMp3,convert) : Tiến hành convert danh sách files flac thành mp3,giới hạn số file chạy, nếu có file lỗi sẽ được xử lý riêng và log vào file log.txt
 - runner(srcFolder,desFolder) : hàm xử lý chung, gọi hàm này để chạy toàn bộ chương trình

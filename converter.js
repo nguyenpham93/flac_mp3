@@ -15,11 +15,6 @@ exports.Converter = class {
     this.destFolder = destFolder;
   }
 
-//Kiểm tra file đã được convert chưa
-  checkFileExist(file){
-    return fs.existsSync(file) === true ? true : false;
-  }
-
   /** 
   * @param arrFlac : mảng chứa objects gồm src .flac & status 
   */

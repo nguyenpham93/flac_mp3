@@ -1,4 +1,4 @@
--Demo kỹ thuật child-process, BlueBird promise</br>
+-Demo kỹ thuật child-process, BlueBird promise, Async-Await, Then</br>
  <h3>Yêu cầu :</h3>
  - Convert file định dạng flac sang mp3
  - Trả về thư mục file mp3 có cấu trúc giống thư mục flac  

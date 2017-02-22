@@ -26,16 +26,11 @@ exports.Converter = class {
   // Module make by Nam
   mp3Path(arrFlac){
     let tempMp3 = [];
-    let tempFlac = [];
     arrFlac.forEach((file) => {
         let mp3Src = file.replace('.flac', '.mp3');
-        let fullpathMp3 = this.destFolder + "/" + mp3Src;
-        if(!this.checkFileExist(fullpathMp3)){
-          tempMp3.push(mp3Src);
-          tempFlac.push(file);
-        }
+        tempMp3.push(mp3Src);
     });
-    return [tempFlac,tempMp3];
+    return tempMp3;
 };
 
   /***
@@ -48,7 +43,7 @@ exports.Converter = class {
       let tempdir = outputFile.replace("/" + path.basename(outputFile),'');
       // shell module sử dụng để tạo full path
       shell.mkdir('-p',tempdir);
-        const converter = spawn('ffmpeg', ['-y', '-i', inputFile, '-ab', '320k', '-map_metadata', '0', '-id3v2_version', '3', outputFile]);
+        const converter = spawn('ffmpeg', ['-n', '-i', inputFile, '-ab', '320k', '-map_metadata', '0', '-id3v2_version', '3', outputFile]);
       //   converter.stderr.on('data', (data) => {
       //   console.log(`${data}`);
       // });

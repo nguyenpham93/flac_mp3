@@ -1,2 +1,5 @@
-File /home/bluevn/Desktop/techmaster/flac_mp3/flac/text2.flac caught error
-File /home/bluevn/Desktop/techmaster/flac_mp3/flac/textfile.flac caught error
+File /home/bluevn/Desktop/techmaster/flac_mp3/flac/test.flac caught error
+File /home/bluevn/Desktop/techmaster/flac_mp3/flac/01 The Power Of Love.flac caught error
+File /home/bluevn/Desktop/techmaster/flac_mp3/flac/02 If You Asked Me To.flac caught error
+File /home/bluevn/Desktop/techmaster/flac_mp3/flac/a.flac caught error
+File /home/bluevn/Desktop/techmaster/flac_mp3/flac/test.flac caught error

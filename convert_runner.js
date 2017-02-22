@@ -63,13 +63,10 @@ async function runner(srcFolder,desFolder){
     //Get array .flac files (Tung) 
     let fileArrFlac = await myScanner.listAllFlac(myScanner.srcFolder);
     // Check and return array contains file not convert (Nam)
-    let checked = myConvert.mp3Path(fileArrFlac);
+    let mp3Arr = myConvert.mp3Path(fileArrFlac);
     // Convert .flac to .mp3
-    let arrFlac = checked[0];
-    let arrMp3 = checked[1];
-    renderFile(arrFlac,arrMp3,myConvert,arrFlac.length);
+    renderFile(fileArrFlac,mp3Arr,myConvert,fileArrFlac.length);
 }
 
 console.time("time convert");
 runner(srcFolder,desFolder);
-

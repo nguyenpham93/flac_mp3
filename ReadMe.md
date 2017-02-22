@@ -5,8 +5,8 @@
  - Khi convert những files nào bị lỗi hoặc không đúng định dạng sẽ được xữ lý riêng và log vào log.txt
  - Những files nào đã convert thì sẽ không convert lại
  - Convert xong sẽ hiển thị execute time, tối ưu chương trình
- -<h3>Chạy thử ứng dụng</h3></br>
- -<pre>
+ <h3>Chạy thử ứng dụng</h3></br>
+ <pre>
  git clone https://github.com/nguyenpham93/flac_mp3.git
  cd flac_mp3
  mp3 install
@@ -18,7 +18,7 @@
  - Promise + async-await , then()
  - Child-process 
  - Module shelljs : Dùng tạo subfolder 
- -<h3>1/ scanfile.js</h3>
+ <h3>1/ scanfile.js</h3>
  - Scanner.getFile(srcFolder ) : Dùng để đọc file flac trong thư mục source
  - Scanner.cutPath(filepath) : Rút ngắn đường dẫn file bằng cách cắt bớt source folder 
  - Scanner.addFlac(dir,check): Gọi hàm getFile(dir) lấy toàn bộ files trong thư mục gốc,kiểm tra đuôi .flac và trả về mảng files flac (không chứa thư mục)
